@@ -36,10 +36,26 @@ func main() {
 	fileCount := len(files)
 	fmt.Println(fileCount, "images were found in the directory.")
 
-	fmt.Println("Here are the images:")
-	// List the file names in the directory
-	for i := 0; i < fileCount; i++ {
-		fmt.Println(files[i].Name())
+	// Fetch a random image from the directory
+	fmt.Println("Fetching a random image...")
+	randImage := files[0]
+	fmt.Println("Image retrieved:", randImage.Name())
+
+	fmt.Println("Would you like to see the image? (y/n)")
+	var input string
+	fmt.Scanln(&input)
+	if input == "y" {
+		fmt.Println("Opening image...")
+	} else {
+		fmt.Println("Okay, goodbye!")
+		os.Exit(0)
+	}
+
+	// Open the image (default program for the OS)
+	err = os.StartProcess("./images/"+randImage.Name(), nil)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		os.Exit(1)
 	}
 
 	time.Sleep(1)
