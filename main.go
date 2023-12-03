@@ -61,6 +61,8 @@ func main() {
 	if err != nil {
 		fmt.Println("Error: ", err)
 		os.Exit(1)
+	} else {
+		fmt.Println("Alright! Your image should appear shortly.")
 	}
 
 	time.Sleep(1)
