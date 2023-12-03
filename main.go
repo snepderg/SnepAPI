@@ -10,7 +10,9 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
+	"os/exec"
 	"time"
 )
 
@@ -38,7 +40,8 @@ func main() {
 
 	// Fetch a random image from the directory
 	fmt.Println("Fetching a random image...")
-	randImage := files[0]
+	rand.Seed(time.Now().Unix())
+	randImage := files[rand.Intn(fileCount)]
 	fmt.Println("Image retrieved:", randImage.Name())
 
 	fmt.Println("Would you like to see the image? (y/n)")
@@ -52,7 +55,9 @@ func main() {
 	}
 
 	// Open the image (default program for the OS)
-	err = os.StartProcess("./images/"+randImage.Name(), nil)
+	// TODO: Find a package to handle opening images in a cross-platform way
+	cmd := exec.Command("cmd", "/C", "start", "./images/"+randImage.Name())
+	err = cmd.Start()
 	if err != nil {
 		fmt.Println("Error: ", err)
 		os.Exit(1)
